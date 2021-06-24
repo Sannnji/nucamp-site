@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 function Footer(props) {
   return (
@@ -9,16 +10,16 @@ function Footer(props) {
             <h5>Links</h5>
             <ul className="list-unstyled">
               <li>
-                <a href="#">Home</a>
+                <Link to="/home">Home</Link>
               </li>
               <li>
-                <a href="#">Directory</a>
+                <Link to="/directory">Directory</Link>
               </li>
               <li>
-                <a href="#">About</a>
+                <Link to="/aboutus">About</Link>
               </li>
               <li>
-                <a href="#">Contact</a>
+                <Link to="/contactus">Contact</Link>
               </li>
             </ul>
           </div>
@@ -29,19 +30,19 @@ function Footer(props) {
               href="http://instagram.com/"
             >
               <i className="fa fa-instagram" />
-            </a>{" "}
+            </a>
             <a
               className="btn btn-social-icon btn-facebook"
               href="http://www.facebook.com/"
             >
               <i className="fa fa-facebook" />
-            </a>{" "}
+            </a>
             <a
               className="btn btn-social-icon btn-twitter"
               href="http://twitter.com/"
             >
               <i className="fa fa-twitter" />
-            </a>{" "}
+            </a>
             <a
               className="btn btn-social-icon btn-google"
               href="http://youtube.com/"
