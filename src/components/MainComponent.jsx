@@ -2,20 +2,38 @@ import React, { useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 
 import { CAMPSITES } from "../shared/campsites";
+import { COMMENTS } from "../shared/comments";
+import { PARTNERS } from "../shared/partners";
+import { PROMOTIONS } from "../shared/promotions";
+
 import Directory from "./DirectoryComponent";
 import CampsiteInfo from "./CampsiteInfoComponent";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
 import Home from "./HomeComponent";
+import Contact from "./ContactComponent";
 
 function Main() {
   const [campsites, setCampsite] = useState({
     campsites: CAMPSITES,
+    comments: COMMENTS,
+    partners: PARTNERS,
+    promotions: PROMOTIONS,
     selectedCampsite: null,
   });
 
   const HomePage = () => {
-    return <Home />;
+    return (
+      <Home
+        campsite={
+          campsites.campsites.filter((campsite) => campsite.featured)[0]
+        }
+        promotion={
+          campsites.promotions.filter((promotion) => promotion.featured)[0]
+        }
+        partner={campsites.partners.filter((partner) => partner.featured)[0]}
+      />
+    );
   };
 
   return (
@@ -23,6 +41,7 @@ function Main() {
       <Header />
       <Switch>
         <Route path="/home" component={HomePage} />
+        <Route exact path="/contactus" component={Contact} />
         <Route
           exact
           path="/directory"
