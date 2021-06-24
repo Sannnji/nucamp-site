@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Navbar, NavbarBrand } from "reactstrap";
+
 import { CAMPSITES } from "../shared/campsites";
 import Directory from "./DirectoryComponent";
 import CampsiteInfo from "./CampsiteInfoComponent";
+import Header from "./HeaderComponent";
+import Footer from "./FooterComponent";
 
 function Main() {
   const [campsites, setCampsite] = useState({
@@ -12,11 +14,7 @@ function Main() {
 
   return (
     <div className="App">
-      <Navbar dark color="primary">
-        <div className="container">
-          <NavbarBrand href="/">NuCamp</NavbarBrand>
-        </div>
-      </Navbar>
+      <Header />
       <Directory
         campsites={campsites.campsites}
         onClick={(campsiteId) =>
@@ -33,6 +31,7 @@ function Main() {
           )[0]
         }
       />
+      <Footer />
     </div>
   );
 }
