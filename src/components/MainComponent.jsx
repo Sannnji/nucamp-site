@@ -36,6 +36,15 @@ function Main() {
     );
   };
 
+  const CampsiteWithId = ({match}) => {
+    return (
+        <CampsiteInfo 
+            campsite={campsites.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]}
+            comments={campsites.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
+        />
+    );
+};   
+
   return (
     <div className="App">
       <Header />
@@ -47,23 +56,8 @@ function Main() {
           path="/directory"
           render={() => <Directory campsites={campsites.campsites} />}
         />
+        <Route path='/directory/:campsiteId' component={CampsiteWithId} />
         <Redirect to="/home" />
-        {/* <Directory
-          campsites={campsites.campsites}
-          onClick={(campsiteId) =>
-            setCampsite({
-              campsites: CAMPSITES,
-              selectedCampsite: campsiteId,
-            })
-          }
-        /> */}
-        <CampsiteInfo
-          campsite={
-            campsites.campsites.filter(
-              (campsite) => campsite.id === campsites.selectedCampsite
-            )[0]
-          }
-        />
       </Switch>
       <Footer />
     </div>
