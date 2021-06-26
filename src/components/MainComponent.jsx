@@ -12,6 +12,7 @@ import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
 import Home from "./HomeComponent";
 import Contact from "./ContactComponent";
+import About from "./AboutComponent";
 
 function Main() {
   const [campsites, setCampsite] = useState({
@@ -36,27 +37,38 @@ function Main() {
     );
   };
 
-  const CampsiteWithId = ({match}) => {
+  const CampsiteWithId = ({ match }) => {
     return (
-        <CampsiteInfo 
-            campsite={campsites.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]}
-            comments={campsites.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
-        />
+      <CampsiteInfo
+        campsite={
+          campsites.campsites.filter(
+            (campsite) => campsite.id === +match.params.campsiteId
+          )[0]
+        }
+        comments={campsites.comments.filter(
+          (comment) => comment.campsiteId === +match.params.campsiteId
+        )}
+      />
     );
-};   
+  };
 
   return (
     <div className="App">
       <Header />
       <Switch>
         <Route path="/home" component={HomePage} />
-        <Route exact path="/contactus" component={Contact} />
         <Route
           exact
           path="/directory"
           render={() => <Directory campsites={campsites.campsites} />}
         />
-        <Route path='/directory/:campsiteId' component={CampsiteWithId} />
+        <Route path="/directory/:campsiteId" component={CampsiteWithId} />
+        <Route
+          exact
+          path="/aboutus"
+          render={() => <About partners={campsites.partners} />}
+        />
+        <Route exact path="/contactus" component={Contact} />
         <Redirect to="/home" />
       </Switch>
       <Footer />
