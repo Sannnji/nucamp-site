@@ -32,7 +32,7 @@ function RenderCampsite({ campsite }) {
   );
 }
 
-function RenderComments({ comments }) {
+function RenderComments({ comments, addComment, campsiteId }) {
   if (comments) {
     return (
       <div className="col-md-5 m-1">
@@ -53,21 +53,26 @@ function RenderComments({ comments }) {
             </div>
           );
         })}
-        <CommentForm />
+        <CommentForm campsiteId={campsiteId} addComment={addComment} />
       </div>
     );
   }
   return <div />;
 }
 
-function CommentForm() {
+function CommentForm(props) {
   const [modal, setModal] = useState(false);
-  
+
   const toggleModal = () => setModal(!modal);
 
   function handleSubmit(values) {
-    console.log("Current state is: " + JSON.stringify(values));
-    alert("Current state is: " + JSON.stringify(values));
+    toggleModal();
+    props.addComment(
+      props.campsiteId,
+      values.rating,
+      values.author,
+      values.text
+    );
   }
 
   return (
@@ -97,11 +102,11 @@ function CommentForm() {
               </Control.select>
             </div>
             <div className="form-group">
-              <Label htmlFor="yourName">Your Name</Label>
+              <Label htmlFor="author">Your Name</Label>
               <Control.text
-                model=".yourName"
-                id="yourName"
-                name="yourName"
+                model=".author"
+                id="author"
+                name="author"
                 className="form-control"
                 validators={{
                   required,
@@ -111,7 +116,7 @@ function CommentForm() {
               />
               <Errors
                 className="text-danger"
-                model=".yourName"
+                model=".author"
                 show="touched"
                 component="div"
                 messages={{
@@ -122,11 +127,11 @@ function CommentForm() {
               />
             </div>
             <div className="form-group">
-              <Label htmlFor="comment">Comment</Label>
+              <Label htmlFor="text">Comment</Label>
               <Control.textarea
-                model=".comment"
-                id="comment"
-                name="comment"
+                model=".text"
+                id="text"
+                name="text"
                 className="form-control"
               />
             </div>
@@ -158,7 +163,11 @@ function CampsiteInfo(props) {
         </div>
         <div className="row">
           <RenderCampsite campsite={props.campsite} />
-          <RenderComments comments={props.comments} />
+          <RenderComments
+            comments={props.comments}
+            addComment={props.addComment}
+            campsiteId={props.campsite.id}
+          />
         </div>
       </div>
     );
