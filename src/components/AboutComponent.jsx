@@ -9,6 +9,8 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 
+import { baseUrl } from "../shared/baseUrl";
+
 function RenderPartner({ partner }) {
   if (partner) {
     return (
