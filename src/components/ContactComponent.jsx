@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  Button,
-  Label,
-  Col,
-  Row,
-} from "reactstrap";
+import { Breadcrumb, BreadcrumbItem, Label, Col, Row } from "reactstrap";
 import { Link } from "react-router-dom";
 import { Control, LocalForm, Errors } from "react-redux-form";
 
@@ -103,7 +96,7 @@ class Contact extends Component {
             </a>
           </div>
         </div>
-        
+
         <div className="row row-content">
           <div className="col-12">
             <h2>Send us your Feedback</h2>
