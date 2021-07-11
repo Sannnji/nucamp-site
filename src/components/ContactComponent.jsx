@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Breadcrumb, BreadcrumbItem, Label, Col, Row } from "reactstrap";
+import {
+  Button,
+  Breadcrumb,
+  BreadcrumbItem,
+  Label,
+  Col,
+  Row,
+} from "reactstrap";
 import { Link } from "react-router-dom";
 import { Control, LocalForm, Errors } from "react-redux-form";
 
@@ -29,30 +36,12 @@ class Contact extends Component {
         email: false,
       },
     };
-
-    this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleBlur = (field) => () => {
-    this.setState({
-      touched: { ...this.state.touched, [field]: true },
-    });
-  };
-
-  handleInputChange(event) {
-    const target = event.target;
-    const name = target.name;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-
-    this.setState({
-      [name]: value,
-    });
-  }
-
   handleSubmit(values) {
-    console.log("Current state is: " + JSON.stringify(values));
-    alert("Current state is: " + JSON.stringify(values));
+    this.props.postFeedback(values);
+    this.props.resetFeedbackForm();
   }
 
   render() {
@@ -103,7 +92,10 @@ class Contact extends Component {
             <hr />
           </div>
           <div className="col-md-10">
-            <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+            <LocalForm
+              model="feedbackForm"
+              onSubmit={values => this.handleSubmit(values)}
+            >
               <Row className="form-group">
                 <Label htmlFor="firstName" md={2}>
                   First Name
@@ -222,6 +214,51 @@ class Contact extends Component {
                       validEmail: "Invalid email address",
                     }}
                   />
+                </Col>
+              </Row>
+              <Row className="form-group">
+                <Col md={{ size: 4, offset: 2 }}>
+                  <div className="form-check">
+                    <Label check>
+                      <Control.checkbox
+                        model=".agree"
+                        name="agree"
+                        className="form-check-input"
+                      />
+                      <strong>May we contact you?</strong>
+                    </Label>
+                  </div>
+                </Col>
+                <Col md={4}>
+                  <Control.select
+                    model=".contactType"
+                    name="contactType"
+                    className="form-control"
+                  >
+                    <option>By Phone</option>
+                    <option>By Email</option>
+                  </Control.select>
+                </Col>
+              </Row>
+              <Row className="form-group">
+                <Label htmlFor="feedback" md={2}>
+                  Your Feedback
+                </Label>
+                <Col md={10}>
+                  <Control.textarea
+                    model=".feedback"
+                    id="feedback"
+                    name="feedback"
+                    rows="12"
+                    className="form-control"
+                  />
+                </Col>
+              </Row>
+              <Row className="form-group">
+                <Col md={{ size: 10, offset: 2 }}>
+                  <Button type="submit" color="primary">
+                    Send Feedback
+                  </Button>
                 </Col>
               </Row>
             </LocalForm>

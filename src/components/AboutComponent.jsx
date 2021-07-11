@@ -8,7 +8,9 @@ import {
   Media,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { Fade, Stagger } from "react-animation-components";
 
+import { Loading } from "./LoadingComponent";
 import { baseUrl } from "../shared/baseUrl";
 
 function RenderPartner({ partner }) {
@@ -17,7 +19,7 @@ function RenderPartner({ partner }) {
       <React.Fragment>
         <Media
           object
-          src={partner.image}
+          src={baseUrl + partner.image}
           alt={partner.name}
           style={{ width: "150px" }}
         />
@@ -30,15 +32,37 @@ function RenderPartner({ partner }) {
   }
 }
 
-function About(props) {
-  const partners = props.partners.map((partner) => {
+function PartnerList(props) {
+  const partners = props.partners.partners.map((partner) => {
     return (
-      <Media tag="li" key={partner.id}>
-        <RenderPartner partner={partner} />
-      </Media>
+      <Fade in key={partner.id}>
+        <Media tag="li">
+          <RenderPartner partner={partner} />
+        </Media>
+      </Fade>
     );
   });
 
+  if (props.partners.isLoading) {
+    return <Loading />;
+  }
+  if (props.partners.errMess) {
+    return (
+      <div className="col">
+        <h4>{props.partners.errMess}</h4>
+      </div>
+    );
+  }
+  return (
+    <div className="col mt-4">
+      <Media list>
+        <Stagger in>{partners}</Stagger>
+      </Media>
+    </div>
+  );
+}
+
+function About(props) {
   return (
     <div className="container">
       <div className="row">
@@ -109,7 +133,7 @@ function About(props) {
           <h3>Community Partners</h3>
         </div>
         <div className="col mt-4">
-          <Media list>{partners}</Media>
+          <PartnerList partners={props.partners} />
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { actions } from "react-redux-form";
 
 import Directory from "./DirectoryComponent";
 import CampsiteInfo from "./CampsiteInfoComponent";
@@ -11,6 +12,7 @@ import Home from "./HomeComponent";
 import Contact from "./ContactComponent";
 import About from "./AboutComponent";
 import {
+  postFeedback,
   postComment,
   fetchCampsites,
   fetchComments,
@@ -25,7 +27,8 @@ const mapDispatchToProps = {
   fetchComments: () => fetchComments(),
   fetchPromotions: () => fetchPromotions(),
   fetchPartners: () => fetchPartners(),
-  // resetFeedbackForm: () => actions.reset("feedbackForm"),
+  postFeedback: (text) => postFeedback(text),
+  resetFeedbackForm: () => actions.reset("feedbackForm"),
 };
 
 const mapStateToProps = (state) => {
@@ -114,7 +117,10 @@ class Main extends Component {
                 exact
                 path="/contactus"
                 render={() => (
-                  <Contact resetFeedbackForm={this.props.resetFeedbackForm} />
+                  <Contact
+                    postFeedback={this.props.postFeedback}
+                    resetFeedbackForm={this.props.resetFeedbackForm}
+                  />
                 )}
               />
               <Route

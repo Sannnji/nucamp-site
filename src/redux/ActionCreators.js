@@ -199,3 +199,41 @@ export const partnersFailed = (errMess) => ({
   type: ActionTypes.PARTNERS_FAILED,
   payload: errMess,
 });
+
+export const postFeedback = (feedback) => () => {
+  const newFeedback = {
+    ...feedback
+  }
+
+  return fetch(baseUrl + "feedback", {
+    method: "POST",
+    body: JSON.stringify(newFeedback),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        throw error;
+      }
+    )
+    .then((newFeedback) => newFeedback.json())
+    .then((newFeedback) => {
+      alert(`Thank you for your feedback! ${JSON.stringify(newFeedback)}`);
+    })
+    .catch((error) => {
+      console.log(`Feedback: ${error.message}`);
+      alert(`Your feedback could not be posted\nError: ${error.message}`);
+    });
+};
