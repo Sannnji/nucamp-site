@@ -68,7 +68,6 @@ function RenderComments({ comments, postComment, campsiteId }) {
             );
           })}
         </Stagger>
-        )
         <CommentForm campsiteId={campsiteId} postComment={postComment} />
       </div>
     );
@@ -95,7 +94,7 @@ function CommentForm(props) {
     <>
       <Button outline onClick={toggleModal}>
         <i className="fa fa-pencil fa-lg mr-2" />
-        Sumbit Commemnt
+        Sumbit Comment
       </Button>
 
       <Modal isOpen={modal} toggle={toggleModal}>
